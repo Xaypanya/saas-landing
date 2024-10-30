@@ -1,3 +1,7 @@
 export const ProductShowcase = () => {
-  return null;
+  return (
+    <div>
+      product showcase
+    </div>
+  );
 };
