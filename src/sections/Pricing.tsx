@@ -71,6 +71,7 @@ export const Pricing = () => {
                 "card",
                 tier.inverse && "border-black bg-black text-white"
               )}
+              key={tier.title}
             >
               <div className="flex justify-between">
                 <h3
@@ -107,7 +108,7 @@ export const Pricing = () => {
               </button>
               <ul className="flex flex-col gap-5 mt-8">
                 {tier.features.map((feature) => (
-                  <li className="flex text-sm items-center gap-4">
+                  <li className="flex text-sm items-center gap-4" key={feature}>
                     <CheckIcon className="h-6 w-6" />
                     <span>{feature}</span>
                   </li>
