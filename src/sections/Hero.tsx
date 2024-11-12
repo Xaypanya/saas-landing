@@ -1,18 +1,27 @@
+"use client";
 import ArrowIcon from "@/assets/arrow-right.svg";
 import cogImage from "@/assets/cog.png";
 import cylinderImage from "@/assets/cylinder.png";
 import Image from "next/image";
 import noodleImage from "@/assets/noodle.png";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 export const Hero = () => {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start end", "end start"],
+  })
+
+  const translateY = useTransform(scrollYProgress, [0, 1], [150, -150])
+
   return (
-    <section className="pt-8 pb-20 md:pt-5 md:pb-10 bg-[radial-gradient(ellipse_200%_100%_at_bottom_left,#183EC2,#EAEEFE_80%)] overflow-y-visible overflow-x-clip">
+    <section ref={heroRef} className="pt-8 pb-20 md:pt-5 md:pb-10 bg-[radial-gradient(ellipse_200%_100%_at_bottom_left,#183EC2,#EAEEFE_80%)] overflow-y-visible overflow-x-clip">
       <div className="container">
         <div className="md:flex items-center">
           <div className="md:w-[478px]">
-            <div className="tag">
-              Version 2.0 is here
-            </div>
+            <div className="tag">Version 2.0 is here</div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] text-transparent bg-clip-text mt-6">
               Pathway to productivity
             </h1>
@@ -30,9 +39,40 @@ export const Hero = () => {
             </div>
           </div>
           <div className="mt-20 md:mt-0 md:h-[648px] md:flex-1 relative ">
-            <Image src={cogImage} alt="cog image" className="md:absolute md:h-full md:w-auto md:max-w-none md:-left-6 lg:left-0" />
-            <Image src={cylinderImage} width={220} height={220} alt="cylinder image" className="hidden md:block md:absolute -top-8 -left-32" />
-            <Image src={noodleImage} width={220} alt="noodle image" className="hidden md:block absolute top-[524px] left-[448px] rotate-[30deg]" />
+            <motion.img
+              src={cogImage.src}
+              alt="cog image"
+              className="md:absolute md:h-full md:w-auto md:max-w-none md:-left-6 lg:left-0 "
+              animate={{
+                translateY: [-30, 10],
+              }}
+              transition={{
+                repeat: Infinity,
+                repeatType: "mirror",
+                duration: 2,
+                ease: "easeInOut",
+              }}
+            />
+            <motion.img
+              src={cylinderImage.src}
+              width={220}
+              height={220}
+              alt="cylinder image"
+              className="hidden md:block md:absolute -top-8 -left-32"
+              style={{
+                translateY: translateY
+              }}
+            />
+            <motion.img
+              src={noodleImage.src}
+              width={220}
+              alt="noodle image"
+              className="hidden md:block absolute top-[524px] left-[448px] rotate-[30deg]"
+              style={{
+                rotate: 30,
+                translateY: translateY,
+              }}
+            />
           </div>
         </div>
       </div>
